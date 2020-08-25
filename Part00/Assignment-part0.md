@@ -3,7 +3,7 @@
 browser makes 5 HTTP request: one POST request and four GET request
 
 browser->server: HTTP POST : https://fullstack-exampleapp.herokuapp.com/new_note \
-server-->browser: HTTP status code 302 (server asks the browser to make a HTTP GET request to the address '/note' which is defined in the header's Location )\
+server-->browser: HTTP status code 302 (server asks the browser to make a HTTP GET request to the address '/note' which is defined in the header's Location ) \
 
 browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/notes \
 server-->browser: HTML-code \
