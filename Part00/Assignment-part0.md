@@ -44,6 +44,7 @@ In case of the single app, during form submission browser make only one HTTP (PO
 step 01: the JavaScript code it fetched from the server during initial load invoke an event handler. Event handler createa  new-note and add it to notes and update UI.  
 
 step 02. browser send new note to the server  
+
 browser->server: HTTP POST requestto the adress https://fullstack-exampleapp.herokuapp.com/new_note_spa with payload {content: "awesome", date: "2020-08-25T04:27:08.808Z"}  
 
 server-->browser: {"message":"note created"}
