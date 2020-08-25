@@ -40,11 +40,11 @@ Now, browser will renders notes on browser
 
 ## 0.6: New note (single App)
 
-In case of the single app, during form submission browser make only one HTTP (POST) request to the address location 'new_note_spa ' and server responds with status 201 which mean that The request has been fulfilled and has resulted in one or more new resources being created.
+In case of the single app, during form submission browser make only one HTTP (POST) request to the address location 'new_note_spa ' and server responds with status 201 which mean that The request has been fulfilled and has resulted in one or more new resources being created.\
 
  
-step 01: the JavaScript code it fetched from the server during initial load invoke an event handler. Event handler createa  new-note and add it to notes and update UI.
+step 01: the JavaScript code it fetched from the server during initial load invoke an event handler. Event handler createa  new-note and add it to notes and update UI.\
 
-step 02. browser send new note to the server
-browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/new_note_spa with payload {content: "awesome", date: "2020-08-25T04:27:08.808Z"}
+step 02. browser send new note to the server\
+browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/new_note_spa with payload {content: "awesome", date: "2020-08-25T04:27:08.808Z"} \
 server-->browser: {"message":"note created"}
