@@ -1,5 +1,5 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React from '../node_modules/@types/react'
+import ReactDOM from '../node_modules/@types/react-dom'
 
 const Header = (props) => {
   return(
@@ -15,6 +15,7 @@ const Part = (props) => {
     </>
   )
 }
+
 const Content = (props) => {
   return(
     <div>
@@ -24,7 +25,6 @@ const Content = (props) => {
     </div>
   )
 }
-
 
 const Total = (props) => {
   return(
