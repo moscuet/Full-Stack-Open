@@ -26,6 +26,9 @@ const App = () => {
        <p>Good  {good}</p>
        <p>Neutral  {neutral} </p>
        <p>Bad  {bad}</p>
+       <p>All  {good+bad+neutral}</p>
+       <p>Average  {good+bad+neutral>0?(good-bad)/(good+bad+neutral):'Not available'}</p>
+       <p>Positive  {good+bad+neutral>0?good*100/(good+bad+neutral):'Not available'}</p>
      </div>
     </div>
   )
