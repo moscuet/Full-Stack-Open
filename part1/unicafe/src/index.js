@@ -7,6 +7,7 @@ const Button = (props) => (
   </button>
 )
 const Statistics = ({good,bad,neutral}) =>{
+  if(good+bad+neutral<=0)return <p>no  feedback given</p>
   return(
     <div>
       <h3>Statistic</h3>
@@ -14,8 +15,8 @@ const Statistics = ({good,bad,neutral}) =>{
       <p>Neutral  {neutral} </p>
       <p>Bad  {bad}</p>
       <p>All  {good+bad+neutral}</p>
-      <p>Average  {good+bad+neutral>0?(good-bad)/(good+bad+neutral):'Not available'}</p>
-      <p>Positive  {good+bad+neutral>0?good*100/(good+bad+neutral):'Not available'}</p>
+      <p>Average  {(good-bad)/(good+bad+neutral)}</p>
+      <p>Positive  {good*100/(good+bad+neutral)}</p>
    </div>
   )
 }
