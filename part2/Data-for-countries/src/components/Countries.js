@@ -23,12 +23,12 @@ const Countries = ({countries,updateSearchState}) =>{
         return <li key={index+lang}>{lang}</li>
       })
       const {name,capital,population,flag} = countries[0]
+  
       return(
         <> 
-        <DisplayCountry props ={{name,capital,population,flag,langList}} />
-        <DisplayWeather country = {name} capital={capital}/>
+          <DisplayCountry props ={{name,capital,population,flag,langList}} />
+          <DisplayWeather country = {name} capital={capital}/>
         </>
-
       )
     }
     else{
