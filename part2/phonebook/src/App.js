@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import Persons from './components/Persons'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
+import module from './service/module'
 const App = () => {
 //state
   const [persons, setPersons] = useState([])
@@ -10,43 +10,62 @@ const App = () => {
   const [ newNumber, setNewNumber ] = useState('')
   const [ search, setSearch ] = useState([])
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
+    module.getAll()
       .then(response => {
-        setPersons(response.data)
-        setSearch(response.data)
+        setPersons(response)
+        setSearch(response)
       })
   }, [])
-  
 
-
- //handle
+  let updatePersons = (persons)=>{
+    setPersons(persons)
+    setSearch(persons)  
+  }
+ let reset=() =>{
+  setNewName('')
+  setNewNumber('')
+ }
+ const isExist = () =>persons.filter(person => newName === person.name).length>0
+ const checkId = () =>persons.filter(person => newName === person.name)[0].id
+  const del = (id) =>{
+   module.remove(id).then (res=>{
+    let result = window.confirm(`delete contact ${persons.filter(p=>p.id===id)[0].name}?`)
+    if (result){
+      let updatedPersons = persons.filter( person => person.id!==id)
+      updatePersons(updatedPersons )   
+     }
+    })
+  }
   const changeNameHandle = (e) =>{
     setNewName(e.target.value)
     document.getElementById('message').textContent = ''
-
   }
   const changeNumberHandle = (e) =>setNewNumber(e.target.value)
   const searchHandle = (e) =>{
-    console.log(persons)
     let filteredArr = persons.filter( a => a.name.toUpperCase().includes(e.target.value.toUpperCase()))
     setSearch(filteredArr)
   }
-
-  const isExist = () =>persons.filter(person => newName === person.name).length>0
-
   const submitHandle = (e) => {
     e.preventDefault()
-    if(newName.length>0){
+    let obj ={name:newName,number:newNumber}
+    if(obj.name.length>0){
       if(isExist()){
-        window.alert(`${newName} is already added to phonebook`) 
+        let id= checkId()
+        let result = window.confirm(`update contact ${persons.filter(p=>p.id===id)[0].name}?`)
+        if(result){
+          module.update(id,obj).then( res=>{
+            const z= persons.map( p=> p.id===id? res:p)
+             updatePersons(z)
+             })
+        }
         }
         else {
-          setPersons(persons.concat({name:newName,number:newNumber}))
-          setSearch(persons.concat({name:newName,number:newNumber}))
+          module.add(obj).then( res => {
+            updatePersons(res)
+            
+          })
         }
-        setNewName('')
-        setNewNumber('')
+       reset()
     }
     else document.getElementById('message').textContent = 'Please enter a name'
   }
@@ -59,7 +78,7 @@ const App = () => {
       <PersonForm submitHandle ={submitHandle} changeNameHandle= {changeNameHandle} changeNumberHandle = {changeNumberHandle} newName ={newName} newNumber = {newNumber} />
       <h2>Numbers</h2>
        <p id ='message' style={{color:'red'}}></p>
-       <Persons persons ={search}/>
+       <Persons persons ={search} del={del} />
     </div>
   )
 }
