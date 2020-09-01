@@ -25,9 +25,13 @@ const App = () => {
   setNewName('')
   setNewNumber('')
  }
- const isExist = () =>persons.filter(person => newName === person.name).length>0
+ const isExist = () =>{
+   console.log(persons)
+   return persons.filter(person => newName === person.name).length>0
+ }
  const checkId = () =>persons.filter(person => newName === person.name)[0].id
-  const del = (id) =>{
+  
+ const del = (id) =>{
    module.remove(id).then (res=>{
     let result = window.confirm(`delete contact ${persons.filter(p=>p.id===id)[0].name}?`)
     if (result){
@@ -61,8 +65,7 @@ const App = () => {
         }
         else {
           module.add(obj).then( res => {
-            updatePersons(res)
-            
+            updatePersons(persons.concat(res))
           })
         }
        reset()
@@ -78,7 +81,7 @@ const App = () => {
       <PersonForm submitHandle ={submitHandle} changeNameHandle= {changeNameHandle} changeNumberHandle = {changeNumberHandle} newName ={newName} newNumber = {newNumber} />
       <h2>Numbers</h2>
        <p id ='message' style={{color:'red'}}></p>
-       <Persons persons ={search} del={del} />
+       <Persons persons={search} del ={del} />
     </div>
   )
 }
