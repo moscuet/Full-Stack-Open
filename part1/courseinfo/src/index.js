@@ -1,106 +1,56 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-
-
-const Header = (props) => {
-  return(
-    <>
-       <h1>{props.course}</h1>
-    </>
-  )
-}
-const Part = (props) => {
-  return(
-    <>
-      <p>{props.part.name} {props.part.exercises}</p>
-    </>
-  )
-}
-
-const Content = (props) => {
-  return(
-    <div>
-        <Part part = {props.parts[0]} />
-        <Part part = {props.parts[1]} />
-        <Part part = {props.parts[2]} />
-    </div>
-  )
-}
-
-const Total = (props) => {
-  return(
-    <>
-      <p>Number of exercises {props.parts[0].exercises+ props.parts[1].exercises + props.parts[2].exercises}</p>
-    </>
-  )
-}
-
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Courses from './Courses'
 const App = () => {
-  const course = {
-    name: 'Half Stack application development',
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7
-      },
-      {
-        name: 'State of a component',
-        exercises: 14
-      }
-    ]
-  }
-  return (
+  const courses = [
+    {
+      name: 'Half Stack application development',
+      id: 1,
+      parts: [
+        {
+          name: 'Fundamentals of React',
+          exercises: 10,
+          id: 1
+        },
+        {
+          name: 'Using props to pass data',
+          exercises: 7,
+          id: 2
+        },
+        {
+          name: 'State of a component',
+          exercises: 14,
+          id: 3
+        },
+        {
+          name: 'Redux',
+          exercises: 11,
+          id: 4
+        }
+      ]
+    }, 
+    {
+      name: 'Node.js',
+      id: 2,
+      parts: [
+        {
+          name: 'Routing',
+          exercises: 3,
+          id: 1
+        },
+        {
+          name: 'Middlewares',
+          exercises: 7,
+          id: 2
+        }
+      ]
+    }
+  ]
+  return(
     <div>
-      <Header course={course.name} />
-      <Content parts = {course.parts} />
-     <Total parts = {course.parts}/>
+      <h1>Web development curriculum</h1>
+      <Courses courses ={courses}/>
     </div>
   )
 }
-// const History = (props) => {
-//   if (props.allClicks.length === 0) {
-//     return (
-//       <div>
-//         the app is used by pressing the buttons
-//       </div>
-//     )
-//   }
-
-//   return (
-//     <div>
-//       button press history: {props.allClicks.join(' ')}
-//     </div>
-//   )
-// }
-// const App = (props) => {
-//   const [left, setLeft] = useState(0)
-//   const [right, setRight] = useState(0)
-//   const [allClicks, setAll] = useState([])
-
-//   const handleLeftClick = () => {
-//     setAll(allClicks.concat('L'))
-//     setLeft(left + 1)
-//   }
-//   const handleRightClick = () => {
-//     setAll(allClicks.concat('R'))
-//     setRight(right + 1)
-//   }
-
-//   return (
-//     <div>
-//       <div>
-//         {left}
-        
-//         <button onClick={handleLeftClick}>left</button>
-//         <button onClick={handleRightClick}>right</button>
-//         {right}
-//         <History allClicks={allClicks} />
-//       </div>
-//     </div>
-//   )
-// }
 ReactDOM.render(<App />, document.getElementById('root'))
