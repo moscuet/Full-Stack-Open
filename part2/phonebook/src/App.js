@@ -96,7 +96,7 @@ const App = () => {
   return (
     <div style={{margin:'20px'}}>
       <div style = {{height:'120px'}}>
-        <h3 style={{margin:'5px', padding:'0px'}}>Phonebook </h3>
+        <h3 >Phonebook </h3>
         <Notification message={message} color={color}/>
       </div>
      
