@@ -1,3 +1,7 @@
+to run app with local server data we need to run server as well using separate port with separate bash
+in root directory: npm run server 
+
+
 To run app from local server:
 A. 
 01. Create a file named db.json in the root directory of the project and save data object there: { "persons":[...]}

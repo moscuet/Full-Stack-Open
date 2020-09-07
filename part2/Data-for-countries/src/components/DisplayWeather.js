@@ -8,7 +8,6 @@ const DisplayWeather = ({country,capital}) =>{
     axios.get(`http://api.weatherstack.com/current?access_key=${api_key}&query=${country}`)
     .then(response=>{
         setWeather(response.data.current)
-        console.log(response.data)
     })
   },[api_key, country])
   if(weather.temperature){
