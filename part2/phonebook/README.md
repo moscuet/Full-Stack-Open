@@ -1,3 +1,18 @@
+To run app from local server:
+A. 
+01. Create a file named db.json in the root directory of the project and save data object there: { "persons":[...]}
+02. install json server and seting port: npx json-server --port 3001 --watch db.json
+03. configure script if installation didn't update: package.json=> script:"server": "json-server -p3001 --watch db.json"
+04. run app in port 3000, and server inn 3001. use diffrent bash to run both separately.
+    app run: $npm start
+    server run: npm run server
+now app UI should updated with server data
+
+ http://localhost:3001/persons > will show persons object in browser
+
+ B. 
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
