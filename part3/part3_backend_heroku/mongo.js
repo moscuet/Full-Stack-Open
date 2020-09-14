@@ -1,11 +1,11 @@
-// node mongo.js Mguser1gm
+// node mongo.js Mguser1gm Anna 0401234556
 const mongoose = require('mongoose')
 if(process.argv.length<3){
     console.log('please provide pasword as an argument: $ node mongo.js <password>')
     console.log('Or, provide pasword, name, number as an argument: $ node mongo.js <password> name number')
     process.exit(1)
 }
-
+//node mongo.js yourpassword Anna 040-1234556
 const password = process.argv[2]
 const url = `mongodb+srv://user1:${password}@cluster0.j79vi.mongodb.net/app-notes?retryWrites=true&w=majority`
 mongoose.connect(url,{useUnifiedTopology:true,useNewUrlParser:true})
@@ -13,7 +13,7 @@ mongoose.connect(url,{useUnifiedTopology:true,useNewUrlParser:true})
 
 const contactSchema = new mongoose.Schema({
     name:String,
-    number: Number
+    number: String
 })
 
 const Contact= mongoose.model('Contact',contactSchema)
