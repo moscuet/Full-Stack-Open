@@ -75,16 +75,6 @@ app.delete('/api/persons/:id', (req, res) => {
 });
 
 
-// let port = process.env.PORT;
-
-// if (port == null || port == "") {
-//   port = 8000;
-// }
-// app.listen(port, () => {
-//   console.log(`Server running on port ${port}`);
-// });
-
-
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
