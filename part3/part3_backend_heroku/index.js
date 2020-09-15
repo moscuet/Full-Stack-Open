@@ -62,16 +62,14 @@ app.get('/info', (req, res) => {
 
 app.get('/api/persons/:id', (req, res) => {
   let id = req.params.id
-  Contact.find({}).then(contacts => {
-    let person = contacts.find ( p => p._id.toString()===id)
-    if (person) {
-      res.json(person)
-    } else {
-      res.status(404).end()
+  Contact.find({_id:mongoose.Types.ObjectId(id)})
+  .then(contact => {
+    if(contact.length>0){
+      res.json(contact[0])
     }
-  })
+    else res.status(404).end()
+   })
 })
-
 
 app.post('/api/persons', (req, res) => {
   const body = req.body
@@ -79,17 +77,17 @@ app.post('/api/persons', (req, res) => {
   return res.status(206).json({ error: 'incomplete input' })
  }
 
-  Contact.exists({name:body.name}, (err, result)=> {
+  Contact.exists({name:body.name}, (err, result) => {
     if(!result){
       const contact = new Contact({
         name: body.name,
         number: body.number,
       })
-      contact.save().then(result => {
-        console.log('note saved!')
-      })
-      Contact.find({}).then( contacts=>{  
-        res.json(contacts)
+      contact.save().then(resp => {
+        console.log('note saved!',resp)
+        Contact.find({}).then(persons => {
+          res.json(persons);
+        })
       })
     }
     else  {
