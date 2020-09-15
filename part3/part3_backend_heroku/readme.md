@@ -106,3 +106,19 @@ To create a new production build of the frontend without extra manual work, let'
 
 data deleting from collection:
 https://kb.objectrocket.com/mongo-db/how-to-delete-documents-with-mongoose-235 
+
+
+
+## .env
+1. in root install: $ npm install dotenv --save
+2. create .env file in root
+3. define variable in the .env file
+   example: PORT=3001
+   MONGODB_URI=mongodb+srv:phonebooks?retryWrites=true&w=majority 
+   Note: dont use string quatation (' ') or backtac (` `)
+            
+4. getting value from .env file
+   add on top of index.js:  require('dotenv').config()
+                            const PORT = process.env.PORT
+
+ 

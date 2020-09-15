@@ -52,6 +52,9 @@ app.post('/api/persons', (req, res) => {
  if (!body.name||!body.number) {
   return res.status(206).json({ error: 'Name / Number is missing' })
  }
+
+  Contact.exists({name:body.name}, (err, result) => {
+    if(!result){
       const contact = new Contact({
         name: body.name,
         number: body.number,
@@ -62,6 +65,11 @@ app.post('/api/persons', (req, res) => {
           res.json(persons);
         })
       })
+    }
+    else  {
+      return res.status(209).json({ error: 'name must be unique' });
+    }
+  });
 });
 
 
