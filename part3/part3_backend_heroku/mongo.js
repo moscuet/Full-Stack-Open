@@ -16,7 +16,7 @@ const Contact= mongoose.model('Contact',contactSchema)
 
 
 
-if(process.argv.length<3){
+if(process.argv.length<4){
     console.log('phonebook:')
     Contact.find({}).then(result => {
         result.forEach(contact => {
