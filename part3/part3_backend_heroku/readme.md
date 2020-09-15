@@ -104,3 +104,5 @@ To create a new production build of the frontend without extra manual work, let'
 
 ## Mongodb:
 
+data deleting from collection:
+https://kb.objectrocket.com/mongo-db/how-to-delete-documents-with-mongoose-235 
