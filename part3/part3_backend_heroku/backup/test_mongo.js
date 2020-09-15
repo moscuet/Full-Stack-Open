@@ -1,4 +1,4 @@
-// node mongo.js Mguser1gm Anna 0401234556
+// node mongo.js **** Anna 0401234556
 const mongoose = require('mongoose')
 if(process.argv.length<3){
     console.log('please provide pasword as an argument: $ node mongo.js <password>')

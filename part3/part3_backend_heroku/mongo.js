@@ -1,6 +1,11 @@
-// node mongo.js Mguser1gm Anna 0401234556
+// node mongo.js *** Anna 0401234556
 const mongoose = require('mongoose')
-const password = 'Mguser1gm'
+if(process.argv.length<3){
+    console.log('please provide pasword as an argument: $ node mongo.js <password>')
+    console.log('Or, provide pasword, name, number as an argument: $ node mongo.js <password> name number')
+    process.exit(1)
+};
+const password = process.argv[2]
 const url = `mongodb+srv://user1:${password}@cluster0.j79vi.mongodb.net/phonebooks?retryWrites=true&w=majority`;
 mongoose.connect(url,{useUnifiedTopology:true,useNewUrlParser:true});
 const contactSchema = new mongoose.Schema({
@@ -21,10 +26,10 @@ if(process.argv.length<3){
     })
 };
 
-if(process.argv.length>3){
+if(process.argv.length>4){
     const  contact = new Contact({
-        name: process.argv[2],
-        number:process.argv[3]
+        name: process.argv[3],
+        number:process.argv[4]
     });
     contact.save().then( res=>{
         console.log(`added ${res.name} number ${res.number} to phonebook`)

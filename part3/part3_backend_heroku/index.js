@@ -21,7 +21,8 @@ const checkDuplicate = name => persons.find( p => p.name===name);
 
 //mongoose
 const mongoose = require('mongoose')
-const password = 'Mguser1gm'
+
+const password = '******'
 const url = `mongodb+srv://user1:${password}@cluster0.j79vi.mongodb.net/phonebooks?retryWrites=true&w=majority`;
 mongoose.connect(url,{useUnifiedTopology:true,useNewUrlParser:true});
 
