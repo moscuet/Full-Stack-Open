@@ -5,7 +5,6 @@ import Filter from './components/Filter'
 import module from './service/module'
 import Notification from './components/Notification'
 
-
 const App = () => {
 //state
   const [persons, setPersons] = useState([])
@@ -65,14 +64,31 @@ const App = () => {
   const submitHandle = (e) => {
     e.preventDefault()
     let newObject ={name:newName,number:newNumber}
-    module.add(newObject).then( res=>{
-      if(res.error) updateNotification(`${res.error}`,'red')
-      else {
-        updatePersons(res)
-        updateNotification(`${newObject.name} added to the phonebook`,'green')
-        reset()
-      }
-    })
+    // name is case sensitive
+    const isExist = persons.filter( p=> p.name===newObject.name).length!==0
+    if(isExist){
+      if(!window.confirm(`update ${newName}'s number?`)) return
+      const id = persons.filter( p => p.name===newObject.name)[0].id
+      module.update(id,newObject).then (res =>{
+        if(res.error) updateNotification(`${res.error}`,'red')
+        else {
+          let update = persons.map( p=> p.id===res.id? res:p )
+          updatePersons(update)
+          updateNotification(`${newObject.name} updated to the phonebook`,'green')
+          reset()
+        }
+      })
+    }
+    else{
+      module.add(newObject).then( res=>{
+        if(res.error) updateNotification(`${res.error}`,'red')
+        else {
+          updatePersons(persons.concat(res))
+          updateNotification(`${newObject.name} added to the phonebook`,'green')
+          reset()
+        }
+      })
+    }
   }
 
 

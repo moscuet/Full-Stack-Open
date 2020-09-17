@@ -122,3 +122,11 @@ https://kb.objectrocket.com/mongo-db/how-to-delete-documents-with-mongoose-235
                             const PORT = process.env.PORT
 
  
+
+ # Order of error handler (very important)
+ The json-parser middleware should be among the very first middleware loaded into Express.
+1. app.use(express.static('build'))
+2. app.use(express.json())
+3. app.use(logger)
+ 1. errorHandaler should be at the end
+ 2. unknown endpoints handler should be second last middleware
