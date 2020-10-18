@@ -1,5 +1,5 @@
 to run app with local server data we need to run server as well using separate port with separate bash
-1. in root directory of server (part3_backend_heroku): npm run server
+1. in root directory of server (part3_backend_heroku): npm run dev
 2.  in root directory of phonebook: npm start
 
 
