@@ -1,8 +1,8 @@
 
 
 to run app in local port with server in part3_backend_heroku: we need to run server as well using separate port with separate bash
-1. in root directory of server (part3_backend_heroku): npm run dev
-2.  in root directory of phonebook: npm start
+1. in root directory of server (part3_backend_heroku):$ npm run dev (without nodemon: $ npm start)
+2.  in root directory of phonebook:$ npm start
 
 
 To run app from local Json  server:
