@@ -1,8 +1,8 @@
 
 backend deployed in heroku: https://limitless-thicket-23088.herokuapp.com/
 
-running from local machine: npm start
-
+running from local machine: $npm start \
+running from local machine with nodemon: $npm run dev
 
 ## documentation
 
