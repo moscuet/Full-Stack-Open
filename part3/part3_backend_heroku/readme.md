@@ -1,6 +1,8 @@
 
 backend deployed in heroku: https://limitless-thicket-23088.herokuapp.com/
 
+running from local machine: npm start
+
 
 ## documentation
 
@@ -48,7 +50,7 @@ now add routes code to index js and install all dependency:
 
  # front end production build:
  1.  update baseUrl: build and server file is in same directory. so we can remove server part from base url
-  https://vast-atoll-51076.herokuapp.com/api/persons =>  const baseUrl = '/apipersons'
+  https://vast-atoll-51076.herokuapp.com/api/persons =>  const baseUrl = '/api/persons'
  2. in root: $npm run build
  3. copy and paste root build folder from app root to server root manually / command line:
    $cp -r build ../../../osa3/notes-backend
@@ -60,6 +62,7 @@ now add routes code to index js and install all dependency:
 ### note : 
 1. heroku logs -t
 deploy without manual task (front end production build: 2-6)
+example: 
 {
   "scripts": {
     //...
