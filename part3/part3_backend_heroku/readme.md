@@ -31,7 +31,7 @@ install heroku: (node and npm should be installed already)
 4. $ heroku create
 5. update heroku: $npm upgrade -g heroku
 6. git add => commit => $ git push heroku master
-7. heroku open
+7. $ heroku open
 
 now add routes code to index js and install all dependency:
 1. nodemon: $ npm install --save-dev nodemon
@@ -133,3 +133,10 @@ https://kb.objectrocket.com/mongo-db/how-to-delete-documents-with-mongoose-235
 3. app.use(logger)
  1. errorHandaler should be at the end
  2. unknown endpoints handler should be second last middleware
+
+
+Tips: When you deploy your application to Heroku, it is worth it to at least in the beginning keep an eye on the logs of the heroku application AT ALL TIMES with the command heroku logs -t.
+
+### mongoose-unique-validator
+https://github.com/blakehaswell/mongoose-unique-validator \
+$ npm install --save mongoose-unique-validator

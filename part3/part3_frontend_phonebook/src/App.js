@@ -70,8 +70,10 @@ const App = () => {
       if(!window.confirm(`update ${newName}'s number?`)) return
       const id = persons.filter( p => p.name===newObject.name)[0].id
       module.update(id,newObject).then (res =>{
+        console.log('here1')
         if(res.error) updateNotification(`${res.error}`,'red')
         else {
+          console.log('here2')
           let update = persons.map( p=> p.id===res.id? res:p )
           updatePersons(update)
           updateNotification(`${newObject.name} updated to the phonebook`,'green')
@@ -80,9 +82,13 @@ const App = () => {
       })
     }
     else{
+      console.log('here3')
       module.add(newObject).then( res=>{
+        console.log('here4')
+        console.log("res",res)
         if(res.error) updateNotification(`${res.error}`,'red')
         else {
+          console.log('here5')
           updatePersons(persons.concat(res))
           updateNotification(`${newObject.name} added to the phonebook`,'green')
           reset()

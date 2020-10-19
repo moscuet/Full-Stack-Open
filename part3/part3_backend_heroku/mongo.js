@@ -1,13 +1,17 @@
-// node mongo.js *** Anna 0401234556
+// to add new number Anna from command:$ node mongo.js pass(mongoDB) Anna 0401234556
+
 const mongoose = require('mongoose')
+
 if(process.argv.length<3){
     console.log('please provide pasword as an argument: $ node mongo.js <password>')
     console.log('Or, provide pasword, name, number as an argument: $ node mongo.js <password> name number')
     process.exit(1)
 };
-const password = process.argv[2]
-const url = `mongodb+srv://user1:${password}@cluster0.j79vi.mongodb.net/phonebooks?retryWrites=true&w=majority`;
+//console.log('arg',process.argv)
+const password = process.argv[2] // process.argv gives all command line arguments value i.e: if we write 
+const url = `mongodb+srv://user1:${password}@cluster0.j status79vi.mongodb.net/phonebooks?retryWrites=true&w=majority`;
 mongoose.connect(url,{useUnifiedTopology:true,useNewUrlParser:true});
+
 const contactSchema = new mongoose.Schema({
     name:String,
     number: String

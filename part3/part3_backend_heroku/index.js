@@ -3,22 +3,15 @@ require('dotenv').config()
 const express = require('express');
 const app =express();
 const cors = require('cors')
-app.use(express.static('build'))
- app.use(express.json());
- app.use(cors())
 const Contact = require('./models/contact');
 const { update } = require('./models/contact');
+const morgan = require('morgan');
 
- const errorHandler = (error, request, response, next) => {
-  console.log(error)
-  if (error.name === 'CastError') {
-    console.log('Eror Name',error.name)
-    return response.status(400).send({ error: 'malformatted id' })
-  } 
-  next(error)
-}
+ app.use(express.static('build'))
+ app.use(express.json());
+ app.use(cors())
 
- const morgan = require('morgan');
+
 morgan.token('host', function(req, res) {
   return req.hostname;
 });
@@ -65,10 +58,10 @@ app.get('/api/persons/:id', (req, res) => {
     })
 })
 
-app.post('/api/persons', (req, res) => {
+app.post('/api/persons', (req, res, next) => {
   const body = req.body
  if (!body.name||!body.number) {
-  return res.status(206).json({ error: "Name or Number is missing" })
+  return res.status(206).json({ error: "incomplete contact" }) // res.status(404) throw error to console
  }
       const contact = new Contact({
         name: body.name,
@@ -77,11 +70,10 @@ app.post('/api/persons', (req, res) => {
       contact.save().then(savedContact => {
         console.log('note saved!', savedContact)
         res.json(savedContact);
-      })
+      }).catch(error => next(error))
 });
 app.put('/api/persons/:id', (request, response, next) => {
   const body = request.body
-   console.log('body',body )
   const contact = {
     name: body.name,
     number: body.number
@@ -92,7 +84,6 @@ app.put('/api/persons/:id', (request, response, next) => {
     })
     .catch(error => next(error))
 })
-
 
 app.delete('/api/persons/:id', (req, res, next) => {
   Contact.findByIdAndRemove(req.params.id)
@@ -106,6 +97,24 @@ app.delete('/api/persons/:id', (req, res, next) => {
     })
     .catch(error => next(error))
 })
+
+
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: 'unknown endpoint' })
+}
+
+app.use(unknownEndpoint)
+
+const errorHandler = (error, req, res, next) => {
+  if (error.name === 'CastError') {
+    console.log('error name',error.name)
+    return res.status(400).send({ error: 'malformatted id' })
+  } else if (error.name === 'ValidationError') {
+    console.log('error.message',error.message)
+      return res.send({ error: error.message})
+  }
+  next(error)
+}
 
 app.use(errorHandler)
 

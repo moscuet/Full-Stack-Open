@@ -11,9 +11,14 @@ const remove = (id) =>{
 }
 const add = newObject => {
   const request = axios.post(baseUrl, newObject)
-  return request.then(response => {
-    return response.data
+  return request.then(res => {
+    console.log('module res',res.body)
+    return res.data
   })
+  .catch((error,req,res) => {
+    console.log('module error',error)
+      return {error:error.message}
+  });
 }
 const update = (id,newObject) => {
   const request = axios.put(`${baseUrl}/${id}`, newObject)
