@@ -159,3 +159,123 @@ const uniqueValidator = require('mongoose-unique-validator');
   `
 /Now when you try to save a user, the unique validator will check for duplicate database entries 
   //and report them just like any other validation error:
+
+
+  ## Lint
+  Generically, lint or a linter is any tool that detects and flags errors in programming languages, including stylistic errors. The term lint-like behavior is sometimes applied to the process of flagging suspicious language usage. Lint-like tools generally perform static analysis of source code. \
+  In the JavaScript universe, the current leading tool for static analysis aka. "linting" is ESlint.
+ //install ESlint as a development dependency to the backend project with the command:
+  $ npm install eslint --save-dev
+
+  initialize a default ESlint configuration with the command: 
+  $ node_modules/.bin/eslint --init
+  it should save a file in directory named eslintrc.js
+run ESlint for single file: node_modules/.bin/eslint index.js // for index.js
+run Eslint for all files in directory: 
+1.  create a separate npm script for linting:
+```
+   {
+  // ...
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    // ...
+    "lint": "eslint ."
+  },
+  // ...
+}
+```
+$ npm run lint  \
+then  Now the npm run lint command will check every file in the project.
+
+Avoid checking build folder by creating .eslintignore file in the project's root with the following contents: build
+this causes the entire build directory to not be checked by ESlint.
+
+## problem and solution: 
+  removing process undefined problem: 
+  add "node": true to the env in .eslintrc.js file
+  
+```
+  module.exports = {
+    "env": {
+        "node": true,
+        "browser": true,
+        "commonjs": true,
+        "es6": true
+    },
+...
+}
+
+The configuration will be saved in the .eslintrc.js file:
+module.exports = {
+    'env': {
+        'commonjs': true,
+        'es6': true,
+        'node': true
+    },
+    'extends': 'eslint:recommended',
+    'globals': {
+        'Atomics': 'readonly',
+        'SharedArrayBuffer': 'readonly'
+    },
+    'parserOptions': {
+        'ecmaVersion': 2018
+    },
+    'rules': {
+        'indent': [
+            'error',
+            4
+        ],
+        'linebreak-style': [
+            'error',
+            'unix'
+        ],
+        'quotes': [
+            'error',
+            'single'
+        ],
+        'semi': [
+            'error',
+            'never'
+        ],
+        
+    }
+}
+```
+add the eqeqeq rule that warns us, if equality is checked with anything but the triple equals operator. \
+Let's prevent unnecessary trailing spaces at the ends of lines, let's require that there is always a space before and after curly braces, and let's also demand a consistent use of whitespaces in the function parameters of arrow functions.\
+This includes a rule that warns about console.log commands. Disabling a rule can be accomplished by defining its "value" as 0 in the configuration file. Let's do this for the no-console rule in the meantime.\
+
+Our default configuration takes a bunch of predetermined rules into use from eslint:recommended:
+'extends': 'eslint:recommended',\
+```
+  // ...
+  {
+  // ...
+  'rules': {
+    // ...
+    'eqeqeq': 'error',
+    'no-trailing-spaces': 'error',
+    'object-curly-spacing': [
+        'error', 'always'
+    ],
+    'arrow-spacing': [
+        'error', { 'before': true, 'after': true }
+    ],
+    'no-console': 0,
+    'extends': 'eslint:recommended',
+  },
+}
+
+```
+### NB
+ when you make changes to the .eslintrc.js file, it is recommended to run the linter from the command line. This will verify that the configuration file is correctly formatted:
+
+
+If there is something wrong in your configuration file, the lint plugin can behave quite erratically.
+
+Many companies define coding standards that are enforced throughout the organization through the ESlint configuration file. It is not recommended to keep reinventing the wheel over and over again, and it can be a good idea to adopt a ready-made configuration from someone else's project into yours. Recently many projects have adopted the Airbnb Javascript style guide by taking Airbnb's ESlint configuration into use.
+
+### Plugin
+A better alternative to executing the linter from the command line is to configure a eslint-plugin to the editor, that runs the linter continuously. By using the plugin you will see errors in your code immediately. 
+vs code eslint pluggin: https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
