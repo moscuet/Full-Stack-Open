@@ -138,12 +138,12 @@ https://kb.objectrocket.com/mongo-db/how-to-delete-documents-with-mongoose-235
 Tips: When you deploy your application to Heroku, it is worth it to at least in the beginning keep an eye on the logs of the heroku application AT ALL TIMES with the command heroku logs -t.
 
 ### mongoose-unique-validator
-mongoose-unique-validator is a plugin which adds pre-save validation for unique fields within a Mongoose schema.
+mongoose-unique-validator is a plugin which adds pre-save validation for unique fields within a Mongoose schema. \
 https://github.com/blakehaswell/mongoose-unique-validator \
-$ npm install --save mongoose-unique-validator
+$ npm install --save mongoose-unique-validator \
 const uniqueValidator = require('mongoose-unique-validator');
 
-`
+```
  const contactSchema = new mongoose.Schema({
     name: {
       type: String,
