@@ -19,7 +19,7 @@ morgan.token('host', function(req, res) {
 morgan.token('body', function(req, res) {
   return  Object.keys(req.body).length>0? JSON.stringify(req.body): null
 })
-app.use(morgan(':method :host :status :res[content-length] - :response-time ms :body '))
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body '))
 
 //mongoose
 
