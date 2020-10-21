@@ -15,7 +15,6 @@ const blogSchema = new mongoose.Schema({
 
 const Blog = mongoose.model('Blog', blogSchema)
 const mongoUrl = process.env.MONGODB_URI
-//const mongoUrl = 'mongodb://localhost/bloglist'
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
 .then(result => {
     console.log('connected to MongoDB')

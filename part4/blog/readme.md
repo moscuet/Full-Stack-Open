@@ -16,7 +16,7 @@ phonebooks: database name \
 ```
 const Blog = mongoose.model('Blog', blogSchema)
 ```
-'Blog' inside () must be same as mongodb collection (blogs) name ;
+'Blog' inside () bracket must be same as mongodb collection name(blogs) ;
 
 
 
