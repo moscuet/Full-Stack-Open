@@ -1,3 +1,4 @@
+
 npm init,
 root=> index.js
 add to package.json script: "start": "node index.js",
@@ -18,6 +19,7 @@ const Blog = mongoose.model('Blog', blogSchema)
 ```
 'Blog' inside () bracket must be same as mongodb collection name(blogs) ;
 
+# TEsting node application
 
 
 
