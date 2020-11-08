@@ -8,13 +8,13 @@ blogsRouter.get('/', (req, res) => {
     res.json( blogs)
   })
 })
-
+/*
 blogsRouter.get('/', (req, res) => {
   console.log('blog')
   res.json( `blogs`)
 })
 
-
+*/
 
 blogsRouter.post('/', (req, res, next) => {
   const blog = new Blog(req.body)
