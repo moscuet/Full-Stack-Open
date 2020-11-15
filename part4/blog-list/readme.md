@@ -1,6 +1,6 @@
 Assignment: 4.1-4.7
 
-#### teesting: JEST, library: Loadash 
+#### testing: JEST, library: Loadash 
 npm init\
 root=> index.js\
 add to package.json script: "start": "node index.js",\
