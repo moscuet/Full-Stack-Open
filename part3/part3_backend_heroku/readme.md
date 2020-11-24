@@ -156,18 +156,19 @@ const uniqueValidator = require('mongoose-unique-validator');
     }
   })
   contactSchema.plugin(uniqueValidator);
-  `
-/Now when you try to save a user, the unique validator will check for duplicate database entries 
-  //and report them just like any other validation error:
+```
+Now when you try to save a user, the unique validator will check for duplicate database entries 
+//and report them just like any other validation error:
 
 
-  ## Lint
+## Lint : ESlint
   Generically, lint or a linter is any tool that detects and flags errors in programming languages, including stylistic errors. The term lint-like behavior is sometimes applied to the process of flagging suspicious language usage. Lint-like tools generally perform static analysis of source code. \
   In the JavaScript universe, the current leading tool for static analysis aka. "linting" is ESlint.
  //install ESlint as a development dependency to the backend project with the command:
   $ npm install eslint --save-dev
 
-  initialize a default ESlint configuration with the command: 
+### initialize a default ESlint configuration with the command: 
+
   $ node_modules/.bin/eslint --init
   it should save a file in directory named eslintrc.js
 run ESlint for single file: node_modules/.bin/eslint index.js // for index.js
@@ -248,6 +249,7 @@ This includes a rule that warns about console.log commands. Disabling a rule can
 
 Our default configuration takes a bunch of predetermined rules into use from eslint:recommended:
 'extends': 'eslint:recommended',\
+
 ```
   // ...
   {
@@ -266,8 +268,8 @@ Our default configuration takes a bunch of predetermined rules into use from esl
     'extends': 'eslint:recommended',
   },
 }
-
 ```
+
 ### NB
  when you make changes to the .eslintrc.js file, it is recommended to run the linter from the command line. This will verify that the configuration file is correctly formatted:
 
