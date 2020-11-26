@@ -139,6 +139,11 @@ otherwise we can use toContain. i.e, to veryfy a sring of an Array of strings.\
 ## error handling : try catch mechanism for async await
 
 ```
+  try {
+    // do the async operations here
+  } catch(exception) {
+    next(exception)
+  }
   notesRouter.post('/', async (request, response, next) => {
     const note = new Note({
     ...
@@ -152,3 +157,68 @@ otherwise we can use toContain. i.e, to veryfy a sring of an Array of strings.\
   })
 
 ```
+
+### Eliminating the try-catch
+$ npm install express-async-errors \
+ introduce the library in app.js:\
+ .....
+const express = require('express')
+require('express-async-errors')
+const app = express()
+.....
+now
+```
+notesRouter.delete('/:id', async (request, response, next) => {
+  try {
+    await Note.findByIdAndRemove(request.params.id)
+    response.status(204).end()
+  } catch (exception) {
+    next(exception)
+  }
+})
+```
+can be written as follows:
+```
+notesRouter.delete('/:id', async (request, response) => {
+  await Note.findByIdAndRemove(request.params.id)
+  response.status(204).end()
+})
+```
+so now, If an exception occurs in a async route, the execution is automatically passed to the error handling middleware
+
+## Optimizing the beforeEach function
+
+ findout why it following code doesn't work
+ ```
+ beforeEach(async () => {
+  await Blog.deleteMany({})
+  initialBlogs.forEach(async (blog) => {
+    let blogObject = new Blog(blog)
+    await blogObject.save()
+  })
+})
+```
+The problem is that every iteration of the forEach loop generates its own asynchronous operation, and beforeEach won't wait for them to finish executing. In other words, the await commands defined inside of the forEach loop are not in the beforeEach function, but in separate functions that beforeEach will not wait for. so the execution of tests begins before the database state is initialized
+soluation 1: The Promise.all method can be used for transforming an array of promises into a single promise, that will be fulfilled once every promise in the array passed to it as a parameter is resolved.
+```
+beforeEach(async () => {
+  await Blog.deleteMany({})
+  const blogObjects = initialBlogs.map(blog => new Blog(blog))
+  const promiseArray = blogObjects.map(blog => blog.save())
+  await Promise.all(promiseArray)
+})
+```
+Promise.all executes the promises it receives in parallel. If the promises need to be executed in a particular order,operations can be executed inside of a for...of block, that guarantees a specific execution order.
+```
+beforeEach(async () => {
+  await Blog.deleteMany({})
+  for (let blog of initialBloges) {
+    let blogObject = new Blog(blog)
+    await blogObject.save()
+  }
+})
+```
+### comparing object
+ using  === operator for comparing and matching elements, which means that it is often not well-suited for matching objects.
+  In most cases, the appropriate method for verifying objects in arrays is the toContainEqual matcher
+  

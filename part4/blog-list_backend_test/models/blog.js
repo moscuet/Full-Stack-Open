@@ -21,7 +21,7 @@ const blogSchema = new mongoose.Schema({
 
 blogSchema.set('toJSON', {
   transform: (document, returnedObj) => {
-    returnedObj.id = returnedObj._id.toString()
+    returnedObj.id = returnedObj._id.toString() //Even though the _id property of Mongoose objects looks like a string, it is in fact an object. The toJSON method we defined transforms it into a string just to be safe.
     delete returnedObj._id
     delete returnedObj.__v
   }

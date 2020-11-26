@@ -1,5 +1,5 @@
-Assignment: 4.1-4.7
-
+Assignment: 4.1-4.7 \
+Front end
 #### testing: JEST, library: Loadash 
 npm init\
 root=> index.js\

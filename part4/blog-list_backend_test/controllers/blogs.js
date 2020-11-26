@@ -4,13 +4,43 @@ const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
 
 blogsRouter.get('/', async(req, res) => {
-  try {
-    const blogs = await Blog.find({})
-    res.json( blogs.map( blog => blog.toJSON()))
-  } catch(error){
-    next(error)
+  const blogs = await Blog.find({})
+  res.json( blogs.map( blog => blog.toJSON()))
+
+})
+// elimanating catch & error by using library: npm install express-async-errors
+blogsRouter.get('/:id', async(req, res) => {
+  const id = req.params.id
+  const blog = await Blog.findById(id)
+  if (blog) {
+    res.json(blog)
+  } else {
+    res.status(404).end()
   }
 })
+
+blogsRouter.post('/', async(req, res) => {
+  const blog = new Blog(req.body)
+  if(!blog.likes)blog.likes =0
+  const savedBlog = await blog.save()
+  res.json(savedBlog.toJSON())
+})
+
+
+blogsRouter.delete('/:id', async(req, res) => {
+  const id = req.params.id
+  await Blog.findByIdAndRemove(id)
+  res.status(204).end()
+
+})
+
+module.exports = blogsRouter
+
+
+
+
+/* with cath and error
+
 blogsRouter.get('/:id', async(req, res,next) => {
   const id = req.params.id
   try{
@@ -25,7 +55,6 @@ blogsRouter.get('/:id', async(req, res,next) => {
   }
 })
 
-
 blogsRouter.post('/', async(req, res,next ) => {
   const blog = new Blog(req.body)
   try {
@@ -35,18 +64,4 @@ blogsRouter.post('/', async(req, res,next ) => {
     next(exception)
   }
 })
-
-
-blogsRouter.delete('/:id', async(req, res, next) => {
-  console.log('idd',req.params.id)
-  try {
-    const id = req.params.id
-    console.log('id',id)
-    await Blog.findByIdAndRemove(id)
-    res.status(204).end()
-  } catch (exception) {
-    next(exception)
-  }
-})
-
-module.exports = blogsRouter
+*/
