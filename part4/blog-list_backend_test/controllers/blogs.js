@@ -19,6 +19,8 @@ blogsRouter.get('/:id', async(req, res) => {
   }
 })
 
+
+
 blogsRouter.post('/', async(req, res) => {
   const blog = new Blog(req.body)
   if(!blog.likes)blog.likes =0
@@ -26,7 +28,7 @@ blogsRouter.post('/', async(req, res) => {
   res.json(savedBlog.toJSON())
 })
 
-
+// delete a specific  blog
 blogsRouter.delete('/:id', async(req, res) => {
   const id = req.params.id
   await Blog.findByIdAndRemove(id)
@@ -34,12 +36,23 @@ blogsRouter.delete('/:id', async(req, res) => {
 
 })
 
+// Edit a specific  blog
+blogsRouter.put('/:id', async(req, res) => {
+  const id = req.params.id
+  const blog = req.body
+  console.log('id',id)
+  Blog.findByIdAndUpdate(id, blog, { new: true })
+    .then(updatedNote => {
+      res.json(updatedNote)
+    })
+    .catch(error => next(error))
+})
 module.exports = blogsRouter
 
 
 
 
-/* with cath and error
+/* with try & cath error
 
 blogsRouter.get('/:id', async(req, res,next) => {
   const id = req.params.id
