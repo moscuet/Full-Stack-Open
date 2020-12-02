@@ -32,3 +32,15 @@ blogSchema.set('toJSON', {
 })
 
 module.exports = mongoose.model('Blog', blogSchema)
+
+/* blog sample or post
+
+ {
+        "title": "testing user blog",
+        "author": "Mostafizur",
+        "url": "url",
+        "likes": 10,
+        "user": "5fc5dd965f9c6d182e3b54fc"
+    }
+
+*/

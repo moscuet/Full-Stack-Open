@@ -3,9 +3,17 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
 const User = require('../models/user')
+const jwt = require('jsonwebtoken')
+const getTokenFrom = request => {
+  const authorization = request.get('authorization')
+  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+    return authorization.substring(7)
+  }
+  return null
+}
 
 blogsRouter.get('/', async(req, res) => {
-  const blogs = await Blog.find({})
+  const blogs = await Blog.find({}).populate('user', { username:1,name:1,id:1 }) //selected: username,name,id deselect blogs
   res.json( blogs.map( blog => blog.toJSON()))
 
 })
@@ -24,7 +32,15 @@ blogsRouter.get('/:id', async(req, res) => {
 
 blogsRouter.post('/', async(req, res) => {
   const body = req.body
-  const user = await User.findById(body.userId)
+  console.log('body',body)
+  const token = getTokenFrom(req)
+  console.log('token', token)
+  const decodedToken = jwt.verify(token, process.env.SECRET)
+  if (!token || !decodedToken.id) {
+    return response.status(401).json({ error: 'token missing or invalid' })
+  }
+  const user = await User.findById(decodedToken.id)
+  //const user = await User.findById(body.userId)
   const blog = new Blog({
     title:body.title,
     author:body.author,
@@ -65,6 +81,30 @@ module.exports = blogsRouter
 
 
 /* with try & cath error
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJhaG1hbiIsImlkIjoiNWZjNWRkOTY1ZjljNmQxODJlM2I1NGZjIiwiaWF0IjoxNjA2ODA0NzIxfQ.Si2fgKuVrvOvU5q7uZiRRRbjtwpNVj0uWWGyrIGvXyc",
+    "username": "rahman",
+    "name": "mostafizur"
+}
+ "password": "passrahman"
+
+
+{
+        "blogs": [],
+        "username": "rahman",
+        "name": "mostafizur",
+        "id": "5fc5dd965f9c6d182e3b54fc"
+    }
+
+{
+        "title": "testing user blog 2",
+        "author": "remanama",
+        "url": "url",
+        "likes": 0,
+        "user": "5fc52bad3a03c70689de220e",
+        "id": "5fc52d58aa11d6069721bde0"
+    }
+
 
 blogsRouter.get('/:id', async(req, res,next) => {
   const id = req.params.id

@@ -1,3 +1,16 @@
+# HTTP call tips:
+1. adding new user by POST request: \
+
+
+
+
+
+3
+
+
+
+
+# details explanation: 
 ## Database type
 
 ### ralational database
@@ -62,3 +75,28 @@ Database does not actually know that the ids stored in the user field of notes r
 The functionality of the populate method of Mongoose is based on the fact that we have defined "types" to the references in the Mongoose schema with the ref option
 
 ## Token Authentication
+resource: https://scotch.io/tutorials/the-ins-and-outs-of-token-based-authentication#toc-how-token-based-works 
+
+### Json Web Token:
+$ npm install jsonwebtoken \
+controllers/login.js: 
+```
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
+const loginRouter = require('express').Router()
+const User = require('../models/user')
+
+App.js:
+const loginRouter = require('./controllers/login')
+//...
+app.use('/api/login', loginRouter)
+```
+
+## Token Error handling
+add to errorHandler: 
+```
+} else if (error.name === 'JsonWebTokenError') {
+    return response.status(401).json({
+      error: 'invalid token'
+    })
+```
