@@ -23,9 +23,9 @@ describe('when there is initially one user in db', () => {
   test('creation succeeds with a fresh username', async () => {
     const usersAtStart = await helper.usersInDb()
     const newUser = {
-      username: 'mluukkai',
-      name: 'Matti Luukkainen',
-      password: 'salainen',
+      username: 'user2',
+      name: 'mika rinen',
+      password: 'pass2',
     }
     await api
       .post('/api/users')
@@ -44,8 +44,8 @@ describe('when there is initially one user in db', () => {
     const usersAtStart = await helper.usersInDb()
     const newUser = {
       username: 'root',
-      name: 'Superuser',
-      password: 'salainen',
+      name: 'repeated user',
+      password: 'passs',
     }
     const result = await api
       .post('/api/users')
@@ -56,6 +56,40 @@ describe('when there is initially one user in db', () => {
     const usersAtEnd = await helper.usersInDb()
     expect(usersAtEnd).toHaveLength(usersAtStart.length)
   })
+
+  test('creation fails with proper statuscode and message if username is invalid', async () => {
+    const usersAtStart = await helper.usersInDb()
+    const newUser = {
+      username: 'us',
+      name: 'invalid user',
+      password: 'passs',
+    }
+    const result = await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(400)
+      .expect('Content-Type', /application\/json/)
+    expect(result.body.error).toContain('`username` (`us`) is shorter than the minimum allowed length (3)')
+    const usersAtEnd = await helper.usersInDb()
+    expect(usersAtEnd).toHaveLength(usersAtStart.length)
+  })
+  test('creation fails with proper statuscode and message if password is invalid', async () => {
+    const usersAtStart = await helper.usersInDb()
+    const newUser = {
+      username: 'passwordTest',
+      name: 'invalid password',
+      password: 'pa',
+    }
+    const result = await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(400)
+      .expect('Content-Type', /application\/json/)
+    expect(result.body.error).toContain('invalid password')
+    const usersAtEnd = await helper.usersInDb()
+    expect(usersAtEnd).toHaveLength(usersAtStart.length)
+  })
+
 })
 
 afterAll(() => {
