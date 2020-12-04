@@ -100,3 +100,22 @@ add to errorHandler:
       error: 'invalid token'
     })
 ```
+### accessing token
+
+
+Following The middleware  take the token from the Authorization header and place it to the token field of the request object. In other words, if you register this middleware in the app.js file before all routes, routes can access the token with request.token
+app.js: app.use(middleware.tokenExtractor)
+blogsRouter.post('/', async (request, response) => {
+  // ..
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+  // ..
+})
+
+Remember that a normal middleware is a function with three parameters, that at the end calls the last parameter next in order to move the control to next middleware:
+```
+const tokenExtractor = (request, response, next) => {
+  // code that extracts the token
+
+  next()
+}
+```

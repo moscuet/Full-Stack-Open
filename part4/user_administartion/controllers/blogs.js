@@ -4,6 +4,7 @@ const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
+/* following helper function canbe used to get token instead of middleware tokenextractor function
 const getTokenFrom = request => {
   const authorization = request.get('authorization')
   if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
@@ -11,6 +12,8 @@ const getTokenFrom = request => {
   }
   return null
 }
+// getting token inside router: const token = getTokenFrom(request)
+*/
 
 blogsRouter.get('/', async(req, res) => {
   const blogs = await Blog.find({}).populate('user', { username:1,name:1,id:1 }) //selected: username,name,id deselect blogs
@@ -32,9 +35,8 @@ blogsRouter.get('/:id', async(req, res) => {
 
 blogsRouter.post('/', async(req, res) => {
   const body = req.body
-  console.log('body',body)
-  const token = getTokenFrom(req)
-  console.log('token', token)
+  const token = req.token
+  console.log('token',token)
   const decodedToken = jwt.verify(token, process.env.SECRET)
   if (!token || !decodedToken.id) {
     return response.status(401).json({ error: 'token missing or invalid' })
@@ -82,11 +84,11 @@ module.exports = blogsRouter
 
 /* with try & cath error
 {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJhaG1hbiIsImlkIjoiNWZjNWRkOTY1ZjljNmQxODJlM2I1NGZjIiwiaWF0IjoxNjA2ODA0NzIxfQ.Si2fgKuVrvOvU5q7uZiRRRbjtwpNVj0uWWGyrIGvXyc",
-    "username": "rahman",
-    "name": "mostafizur"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIyIiwiaWQiOiI1ZmM4OWQ1NTBjOWM1YjUwNjBhN2E3ZmYiLCJpYXQiOjE2MDY5ODMxMTN9.6rEmu450XnpgRwbJrtOoHlYVN9ekt1Nk9cZ2dRqvlBo",
+    "username": "user2",
+    "name": "name2"
 }
- "password": "passrahman"
+ "password": "pass2"
 
 
 {

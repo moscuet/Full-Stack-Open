@@ -1,3 +1,4 @@
+//npm test -- blog_api.test.js
 /* eslint-disable no-undef */
 // supertest, jest
 const mongoose = require('mongoose')
@@ -7,13 +8,14 @@ const initialBlogs = test_helper.initialBlogs
 const app = require('../app')
 const api = supertest(app)
 const Blog = require('../models/blog')
-
+//jest.useFakeTimers()
 //Initializing the database before tests
 beforeEach(async () => {
   await Blog.deleteMany({})
   const blogObjects = initialBlogs.map(blog => new Blog(blog))
   const promiseArray = blogObjects.map(blog => blog.save())
   await Promise.all(promiseArray)
+  // create new user
 })
 describe('test after initializing test data base', () => {
   // Exercise 4.8
@@ -43,14 +45,28 @@ test('unique identifier property of the blog posts is named id', async() => {
     expect(res.id).toBeDefined()
   })
 })
+
+
+
+
+
+// npm test -- -t blog_api.test.js
 //4.10 ======== Post request ===========
 describe('post new blog', () => {
-  test('adding a valid new blog successfully', async () => {
+  // eslint-disable-next-line no-unused-vars
+  test('adding a valid new blog successfully', async (req,res) => {
     const newBlog = {
       title: 'Test patterns', author: 'Michael Chan', url: 'https://reactpatterns.com/', likes: 17
     }
+    // login to user 'root' withh pssword '0000' and post the blog as root's blog
+    const loginObject = await api.post('/api/login').send( {
+      'username':'root',
+      'password':'0000'
+    })
+    const token = loginObject.token
     await api
       .post('/api/blogs')
+      .set('Authorization', 'Bearer ' + token)
       .send(newBlog)
       .expect(200)
       .expect('Content-Type', /application\/json/)

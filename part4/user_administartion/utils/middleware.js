@@ -26,6 +26,15 @@ const errorHandler = (error, req, res, next) => {
   next(error)
 }
 
+// eslint-disable-next-line no-unused-vars
+const tokenExtractor = (request, response,next) => {
+  const authorization = request.get('authorization')
+  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+    const token = authorization.substring(7)
+    request.token = token
+  }
+  next()
+}
 
 
 const unknownEndpoint = (req, res) => {
@@ -38,5 +47,6 @@ const unknownEndpoint = (req, res) => {
 module.exports = {
   errorHandler,
   requestLogger,
-  unknownEndpoint
+  unknownEndpoint,
+  tokenExtractor
 }
